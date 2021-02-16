@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+div {
+	width: 1000px;
+	height: 1000px;
+	background-color: blue;
+	border-width: 4px;
+	border-color: black;
+}
+
+</style>
+</head>
+<body>
+
+<button onclick="mess()">yo</button>
+<div id="shapes"></div>
+
+
+<script>
+
+function mess() {
+let canvas = document.getElementById('shapes');
+let imgPath = 'img/';
+let imgCollection = ['a.jpg','b.jpg','c.jpg','d.jpg','e.jpg'];
+let imgChoice = Math.floor(Math.random() * imgCollection.length);
+let imgChosen = imgCollection[imgChoice];
+let imgRotation = Math.floor(Math.random() * 360);
+canvas.innerHTML += `<img src="${imgPath}${imgChosen}" width=100px; style="transform:rotate(${imgRotation}deg);"/>`
+console.log(canvas.innerHTML);
+}
+
+</script>
+</body>
+</html> 
+
