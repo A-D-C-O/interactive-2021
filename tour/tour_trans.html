@@ -10,22 +10,28 @@
 	margin-top: 200px;
 	zoom: 0.4;
     -moz-transform: scale(0.4);
-    background-color: black;
 }
 
+.blackSquare {
+	animation: fade 7s linear;
+}
+
+@keyframes fade {
+	0%,100% { opacity: 1; }
+	40%,60% {opacity: 0; }
+}
 
 </style>
 </head>
+
 <body>
 
-	
-<div id="shapes">
-	<img src="room_180/png/A.png" height=3000px usemap="#A_map" id="room_image"/>  
-</div>
-
+	<div id="shapes">
+		<img src="room_180/png/A.png" height=3000px usemap="#A_map" id="room_image" /> 
+	</div>
 
 <map name="A_map">
-	<area shape="rect" coords="0, 0, 2200, 3956" id="A_to_mantle" onclick="img_switch(this.id);mess();" >
+	<area shape="rect" coords="0, 0, 2200, 3956" id="A_to_mantle" onclick="transition(this.id);mess();" >
 	<area shape="rect" coords="2200,0, 3600, 3956" id="A_to_chair" onclick="img_switch(this.id);mess();">
 	<area shape="rect" coords="3600, 0, 5500, 3956" id="A_to_books" onclick="img_switch(this.id);mess();">
 	<area shape="rect" coords="5500, 0, 7500, 3956" id="A_to_bed" onclick="img_switch(this.id);mess();">
@@ -88,45 +94,13 @@ https://reallifemag.com/springtime-everywhere/
 
 <script>
 
-function mess() {
-// get div with the ID "shapes"
-let canvas = document.getElementById('shapes');
-let currentStyle = window.getComputedStyle(canvas);
-let currentMargin = currentStyle.marginLeft;
-let currentMarginNumber = parseInt(currentMargin, 10);
-console.log(currentMarginNumber);
-let imgPath = 'clutter/final/';
-let imgCollection = ['DC.png','frog.png','quarters.png','string.png','polar.png','keys.png','stick.png','keychain.png','tack.png','sani.png','advil.png','12.png','button.png'];
-// randomly choose an image from the files stored in /clutter/final
-let imgChoice = Math.floor(Math.random() * imgCollection.length);
-let imgChosen = imgCollection[imgChoice];
-// give the randomly chosen image a random rotation and location in the div, "shapes"
-let imgRotation = Math.floor(Math.random() * 360);
-let imgTop = Math.floor(Math.random() * 2999);
-let imgLeft = Math.floor(Math.random() * 2999 ) + currentMarginNumber;
-// inject a new image element into the div with the above random;y chosen attributes
-canvas.innerHTML += `<img src="${imgPath}${imgChosen}" width=9%; style="margin:0auto; transform:rotate(${imgRotation}deg); position: absolute; top: ${imgTop}px; left: ${imgLeft}px;"/>`
-console.log(canvas.innerHTML);
-}
-
-
-
 
 
 
 function img_switch (current_id) {
-	console.log("hello");
-	let current = document.getElementById("room_image");
-
-	console.log("test");
-
-
-	let opacityTest = document.getElementById('shapes');
-	let current_opactiy = opacityTest.style.opacity;
-	console.log("current opacity: ");
-	document.getElementById("shapes").style.opacity = .5;
 	
-
+	let current = document.getElementById("room_image");
+	console.log(current_id + "yoyoyoyoyoyoy")
 	if (current_id == "A_to_mantle") {
 		current.src = "room_180/png/mantle.png";
 		current.setAttribute("usemap","#mantle_map");
@@ -195,6 +169,62 @@ function img_switch (current_id) {
 
     console.log("asdfasdf");
 
+}
+
+function toBlack(current_id) {
+	console.log(current_id + "toBlack");
+	let element = document.getElementById("shapes");
+	element.classList.add("blackSquare");
+	function triggerSwitch(current_id) { setTimeout(function a() {img_switch(current_id);}, 3500);
+		console.log(current_id + "it_worksadbadfb");
+	}
+	triggerSwitch(current_id);
+	//Wait until the animation runs to trigger DOM reflow 
+	//and remove "blackSquare" class
+	setTimeout(() => { 
+		void element.offsetWidth; // this line triggers a DOM reflow
+		element.classList.remove("blackSquare"); 
+	}, 7000);
+
+}
+
+function transition(current_id) {
+	console.log(current_id + "transition");
+let diceRoll = Math.floor(Math.random()*4);
+if (diceRoll == 0) {
+	toBlack(current_id);
+	console.log("0");
+} else if (diceRoll == 1) {
+	toBlack(current_id);
+	console.log("1");
+} else if (diceRoll == 2) {
+	toBlack(current_id);
+	console.log("2");
+} else if (diceRoll == 3) {
+	toBlack(current_id);
+	console.log("3");
+	}
+}
+
+    function mess() {
+// get div with the ID "shapes"
+let canvas = document.getElementById('shapes');
+let currentStyle = window.getComputedStyle(canvas);
+let currentMargin = currentStyle.marginLeft;
+let currentMarginNumber = parseInt(currentMargin, 10);
+console.log(currentMarginNumber);
+let imgPath = 'clutter/final/';
+let imgCollection = ['DC.png','frog.png','quarters.png','string.png','polar.png','keys.png','stick.png','keychain.png','tack.png','sani.png','advil.png','12.png','button.png'];
+// randomly choose an image from the files stored in /clutter/final
+let imgChoice = Math.floor(Math.random() * imgCollection.length);
+let imgChosen = imgCollection[imgChoice];
+// give the randomly chosen image a random rotation and location in the div, "shapes"
+let imgRotation = Math.floor(Math.random() * 360);
+let imgTop = Math.floor(Math.random() * 2999);
+let imgLeft = Math.floor(Math.random() * 2999 ) + currentMarginNumber;
+// inject a new image element into the div with the above random;y chosen attributes
+canvas.innerHTML += `<img src="${imgPath}${imgChosen}" width=9%; style="margin:0auto; transform:rotate(${imgRotation}deg); position: absolute; top: ${imgTop}px; left: ${imgLeft}px;"/>`
+console.log(canvas.innerHTML);
 }
 
 </script>
