@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+
+			body {
+				padding: 0px;
+				margin: 0px;
+				display: flex;
+				flex-wrap: wrap;
+			}
+
+			@keyframes dayToNight {
+  				0% {background-color: #8d9387;}
+  				5% {background-color: #8d9387;}
+  				40% {background-color: #e7d545;}
+  				60% {background-color: #e7d545;}
+  				95% {background-color: #8d9387;}
+  				100% {background-color: #8d9387;}
+			}
+
+			#sky {
+				display: inline-block;
+				width: 100vw;
+				height: 50vh;
+				background-color: #e7d545;
+				font-size: 0;
+				animation: dayToNight 7s linear infinite;
+			}
+
+
+			#earth {
+				display: inline-block;
+				width: 100vw;
+				height: 50vh;
+				background-color: #8d9387;
+			}
+
+			.dial {
+
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				position: absolute;
+				top: 20vh;
+				left: calc(50vw - 70px);
+				width: 140px;
+				height: 220px;
+				background-color: transparent;
+
+			}
+
+			.v {
+				flex-direction: row;
+			}
+
+			.h {
+				flex-direction: column;
+			}
+
+			.vsquare {
+				width: 20px;
+				height: 100%;
+				display: inline-block;
+				background-color: #b6af55;
+				z-index: 100;
+			}
+
+			.striped {
+				width: 100%;
+				height: 20px;
+				z-index: 100;
+				background: linear-gradient(90deg, transparent 0 20px, #b6af55 20px 40px, 
+					transparent 40px 60px, #b6af55 60px 80px, transparent 80px 100px,
+					#b6af55 100px 120px, transparent 120px 140px);
+			}
+
+			
+
+			@keyframes shadowAnimate {
+  				0% {transform: skew(90deg); opacity: 0;}
+  				5% {transform: skew(90deg); opacity: 0;}
+  				25% {opacity: 1;}
+  				50% {transform: skew(0deg); opacity: 1;}
+  				75% {opacity: 1;}
+  				95% {transform: skew(-90deg);  opacity: 0;}
+  				100% {transform: skew(-90deg);  opacity: 0;}
+			}
+
+			.shadow {
+				display: flex;
+				justify-content: space-between;
+				position: absolute;
+				top: calc(20vh + 220px);
+				left: calc(50vw - 70px);
+				width: 140px;
+				height: 220px;
+				z-index: 100;
+				animation: shadowAnimate 7s linear infinite;
+				/*transform: skew(85deg);*/
+				transform-origin: 0% 0%
+				
+			}
+
+
+		</style>
+	</head>
+	<body>
+		<div class = "dial v">
+				<div class="vsquare"></div>
+				<div class="vsquare"></div>
+				<div class="vsquare"></div>
+				<div class="vsquare"></div>
+		</div>
+		<div class = "dial h">
+				<div class="striped"></div>
+				<div class="striped"></div>
+				<div class="striped"></div>
+				<div class="striped"></div>
+				<div class="striped"></div>
+				<div class="striped"></div>
+		</div>
+		<div class = "dial"></div>
+		<div class = "shadow v">
+			<div class="vsquare"></div>
+			<div class="vsquare"></div>
+			<div class="vsquare"></div>
+			<div class="vsquare"></div>
+		</div>
+		<div class = "shadow h">
+				<div class="striped"></div>
+				<div class="striped"></div>
+				<div class="striped"></div>
+				<div class="striped"></div>
+				<div class="striped"></div>
+				<div class="striped"></div>
+		</div>
+
+		<div id = "sky"></div>
+		<div id = "earth"></div>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
