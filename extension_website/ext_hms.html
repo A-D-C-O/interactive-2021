@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+
+			html {
+			  	scroll-behavior: smooth;
+			}
+
+			body {
+				background: #ff6347;
+			}
+
+			#body_box{
+				width: 100%
+				height: 100%;
+			}
+
+			/*Navigation bar at top of page: ------------------------------------------------ */
+
+			#top_bar{
+				width: 100vw;
+  				height: 90px;
+  				background-color: #ff6347;
+  				position: fixed;
+  				z-index: 100;
+  				top: 0px;
+  				left: 0px;
+  				border-bottom: 2px solid black;
+  				display: flex;
+  				flex-wrap: nowrap;
+  				justify-content: space-between;
+			}
+
+			.top_box {
+				/*border: 1px solid blue;*/
+				height: 100%;
+				width: 30%;
+				display: flex;
+				flex-wrap: nowrap;
+  				justify-content: space-between;
+			}
+
+			.switch_box {
+				/*border: 1px solid black;*/
+				height: 100%;
+				display: inline-block;
+				white-space: nowrap;
+				/*width: 31%;*/
+			}
+
+			.switch_box p {
+				margin: 0px;
+				font-size: 30px;
+				line-height: 90px;
+			}
+
+			#clock {
+				/*border: 1px solid red;*/
+				font-size: 40px;
+				height: calc(100% - 23px);
+				width: 100%;
+				text-align: center;
+				padding-top: 23px;
+
+			}
+
+			/*download button styling --------------------------------------------------------*/
+
+			#download_button {
+				position: absolute;
+				right: 35px;
+				font-size: 70px;
+				margin-top: -9px;
+				
+			}
+
+			a:link { text-decoration: none; color: #000000; }
+
+
+			a:visited { text-decoration: none; color: #000000;}
+
+
+			a:hover { text-decoration: none; color: blue; }
+
+
+			a:active { text-decoration: none; color: #000000;}
+
+			/* popup styling --------------------------------------------------------*/
+
+			/* Popup container */
+			.popup {
+			  position: relative;
+			  display: inline-block;
+			  bottom: calc(-100% - 16px);
+			  /*border: 2px solid black;*/
+			}
+
+			/* The actual popup (appears on top) */
+			.popup .popuptext {
+			  visibility: hidden;
+			  display: inline-block;
+			  height: 100% /*calc(100%; - 16pt);*/
+			  width: calc(100% - 24px);
+			  background-color: #ff6347;
+			  border: 2px solid black;
+			  text-align: center;
+			  padding: 8px 4px;
+			  /*position: absolute;*/
+			  z-index: 1;
+			  /*left: 0px;*/
+			  font-size: 16pt;
+			  /*margin-top: 20px;*/
+			  cursor: pointer;
+			}
+
+			/* Popup arrow */
+			/*.popup .popuptext::after {
+			  content: "";
+			  position: absolute;
+			  bottom: 100%;
+			  left: 50%;
+			  margin-left: -5px;
+			  border-width: 5px;
+			  border-style: solid;
+			  border-color:  transparent transparent black transparent;
+			}*/
+
+			/* Toggle this class when clicking on the popup container (hide and show the popup) */
+			.popup .show {
+			  visibility: visible;
+			  -webkit-animation: fadeIn 1s;
+			  animation: fadeIn 1s
+			}
+
+			/* Add animation (fade in the popup) */
+			@-webkit-keyframes fadeIn {
+			  from {opacity: 0;}
+			  to {opacity: 1;}
+			}
+
+			@keyframes fadeIn {
+			  from {opacity: 0;}
+			  to {opacity:1 ;}
+			}
+
+
+
+			/*toggle switch ----------------------------------------------------------- */
+
+			.switch {
+			  position: relative;
+			  top: calc(50% - 17px);
+			  left: calc(50% - 30px);
+			  display: inline-block;
+			  width: 60px;
+			  height: 34px;
+			}
+
+			.switch input {
+			  opacity: 0;
+			  width: 0;
+			  height: 0;
+			}
+
+			.slider {
+			  position: absolute;
+			  cursor: pointer;
+			  top: 0;
+			  left: 0;
+			  right: 0;
+			  bottom: 0;
+			  background-color: black;
+			  -webkit-transition: .4s;
+			  transition: .4s;
+			}
+
+			.slider:before {
+			  position: absolute;
+			  content: "";
+			  height: 26px;
+			  width: 26px;
+			  left: 4px;
+			  bottom: 4px;
+			  background-color: #ff6347;
+			  -webkit-transition: .4s;
+			  transition: .4s;
+			}
+
+			input:checked + .slider {
+			  background-color: black;
+			}
+
+			input:focus + .slider {
+			  box-shadow: 0 0 1px #2196F3;
+			}
+
+			input:checked + .slider:before {
+			  -webkit-transform: translateX(26px);
+			  -ms-transform: translateX(26px);
+			  transform: translateX(26px);
+			}
+
+			.slider.round {
+			  border-radius: 34px;
+			}
+
+			.slider.round:before {
+			  border-radius: 50%;
+			}
+
+			/*The main body section ---------------------------------------------- */
+
+			#canvas_box {
+				width: 100vw;
+  				height: 100vh;
+				display: flex;
+				flex-direction: row;
+				flex-wrap: nowrap;
+  				align-items: center;
+  				justify-content: center;
+  				padding-top: 50px;
+			}
+
+			canvas {
+				height: 80vh;
+				width: 80vh;
+				/*border: 1px solid black;*/
+				border-radius: 50%;
+				mix-blend-mode: difference;
+				position: absolute;
+				display: inline-block;
+    			/*top: 0;
+    			left: 0;*/
+			}
+
+			/*clock hands --------------------------------------------------------------- */
+
+			#s {
+  				background-image: linear-gradient(red, yellow);
+			}
+
+			#h {
+				background-image: linear-gradient(teal, yellow);
+			}
+
+			/*description test & rotated letters ----------------------------------------- */
+
+			#body_text {
+				width: 350px;
+				position: relative;
+				margin: auto;
+				font-size: 16pt;
+				/*display: inline-block;*/
+			}
+
+			#body_text p .s {
+				display: inline-block;
+				font-size: 16pt;
+			}
+
+			#body_text p .m {
+				display: inline-block;
+				font-size: 16pt;
+			}
+
+			#body_text p .h {
+				display: inline-block;
+				font-size: 16pt;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<div id="top_bar">
+			<div class="top_box">
+				<div class="switch_box">
+					<p>text clock</p>
+				</div>
+				<div class="switch_box">
+					<label class="switch">
+		  				<input type="checkbox">
+		  				<span class="slider round"></span>
+					</label>
+				</div>
+				<div class="switch_box">
+					<p>image sundial</p>
+				</div>
+			</div>
+			<div class="top_box">
+				<div id="clock"></div>
+			</div>
+			<div class="top_box">
+				<a id="download_button" href="#body_text" onclick="myFunction()">&#9759;</a>
+				<div class="popup" onclick="myFunction()">
+  					<span class="popuptext" id="myPopup">download text clock / image sundial</span>
+				</div>
+			</div>
+		</div>
+		<div id="body_box">
+			<div id="canvas_box"></div>
+			<div id="body_text">
+				<p><strong>text clock</strong></p>
+				<p>
+					Turn the texts you read online into clocks. This browser extension will comb through all of the text on any website that you load. Along the way, it will pause over the letters "h," "m" and "s," representing hours minutes and seconds. It will wrap each of these letters in an invisible piece of code. Then, in real-time, the extension will rotate each wrapped letter according to the current time. "h" will be rotated to the angle of the current hour, "m" the current minute, and "s" the current second, as a clock would rotate its hands.
+				</p>
+			</div>
+		</div>
+		<script>
+
+			// When the user clicks on div, open the popup
+			function myFunction() {
+				  var popup = document.getElementById("myPopup");
+				  popup.classList.toggle("show");
+				  console.log("boop");
+			}
+
+			function TextClocks() {
+
+			  let allTexts = document.querySelectorAll("p"); 
+
+			  for (let allText of allTexts) {
+
+			    const list = {
+			      's' : `<span class="s">s</span>`,
+			      'm' : `<span class="m">m</span>`,
+			      'h' : `<span class="h">h</span>`
+			    }
+
+			    // resetMiddle(allText);
+
+			    allText.innerHTML = allText.innerText.replace(/[smh]/g, i => list[i]);
+
+			  }
+			}
+
+			TextClocks();
+			
+
+			function drawHand(hand, color) {
+
+				let newHand = document.createElement('canvas');
+				newHand.classList.add(hand);
+				newHand.id = hand;
+				let newHandCTX = newHand.getContext("2d");
+				let double = 2;
+				newHand.height = 1000 * double;
+				newHand.width = 1000 * double;
+				newHandCTX.font ='2000px Arial';
+				newHandCTX.textAlign = "center"
+				newHandCTX.textBaseline = 'middle';
+				newHandCTX.fillStyle = color;
+				newHandCTX.fillText(hand, 1000, 1000);
+				let sWidth = newHandCTX.measureText(hand).width;
+				document.getElementById("canvas_box").appendChild(newHand);
+			}
+
+			drawHand("h", "black");
+			drawHand("s", "white");
+			drawHand("m", "white");
+
+
+			function setRotation(clockHand, count) {
+
+				function chooseInterval() {
+					let date = new Date(); // create new date object
+					let seconds = date.getSeconds(); // get current seconds from date object
+					let minutes = date.getMinutes(); // get current minutes from date object
+					let hours = date.getHours(); // get current hours from date object
+					
+					let secondsFormatted = (seconds >= 10) ? seconds : "0" + seconds; // use ternary operator for quick conditional
+					let minutesFormatted = (minutes >= 10) ? minutes : "0" + minutes; // any value less than 10 gets "0" prepended
+					let hoursFormatted = (hours >= 10) ? hours : "0" + hours;
+
+					let topClock = document.getElementById("clock"); // get the clock <div> from the document
+					topClock.innerText = hoursFormatted + " : " + minutesFormatted + " : " + secondsFormatted; 
+					// inject time values with " : " between each
+
+				if(clockHand === "s") {
+						return seconds;
+					} else if (clockHand === "m") {
+						return minutes;
+					} else if (hours > 12) {
+						return hours - 12;
+					} else {
+						return hours;
+					}	
+				}
+
+				secondsNow = chooseInterval();
+				let hand = document.getElementsByClassName(clockHand);
+
+				// Original value range to be normalized to a new range:
+				let minimum = 0; 
+				let maximum = count; 
+
+				// New value range:
+				let newMinimum = 0; // zero degrees rotation
+				let newMaximum = 359; // full circle rotation minus one
+
+				// Normalized value:
+				let normalized = (newMaximum - newMinimum) * [ (secondsNow - minimum) / (maximum - minimum) ] + newMinimum;
+			
+				// The formula for normalizing a value x that comes from a range (y, z) between a range (a, b):
+				// x_normalized = (b - a) * [ (x - y) / (z - y) ] + a
+
+					// hand.style.transform = `rotate(${normalized}deg)`;
+					for(i = 0; i < hand.length; i++) {
+					    hand[i].style.transform = `rotate(${normalized}deg)`;
+					  }
+			}
+
+			setRotation("s", 60);
+			setRotation("m", 60);
+			setRotation("h", 12); 
+
+			setInterval(function(){ 
+				setRotation("s", 60);
+				setRotation("m", 60);
+				setRotation("h", 12); 
+
+			}, 1000);
+			
+			
+		</script>
+		
+	</body>
+</html>
+
+
+
