@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="returnarrows.svg" />
+
+    <title>utterly lost</title>
+
+    <!-- import the webpage's stylesheet -->
+   <!--  <link rel="stylesheet" href="/style.css" /> -->
+
+    <!-- import the webpage's javascript file -->
+    <!-- <script src="/script.js" defer></script> -->
+<style>
+
+  #user_choice {
+    position: relative;
+    top: calc(50% - 11px);
+    left: calc(50% - 43px);
+    height: 22px;
+    width: 66px;
+    /*border: 1px solid red;*/
+  }
+
+  /* lost item email box styling */
+  .box{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    margin: 1rem auto;
+    padding: 2rem;
+    text-align: left;
+    color: black;
+    font-family: serif;
+    margin-top: 20px;
+    line-height: 1.5;
+
+  }
+
+  #email_container {
+    border: 2px solid black;
+  }
+
+  /* lost item email send button styling */
+    button{
+      margin: 0;
+      margin-top: .5rem;
+      position: absolute;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 6px 16px;
+      border: .75px solid black;
+      border-radius: 20px;
+      text-transform: capitalize;
+    }
+
+    button:hover{
+      color: white;
+      background: black;
+    }
+
+    .reply {
+      position: absolute;
+      display: inline-block;
+      border: 2px solid black;
+      background-color: white;
+      height: 300px;
+      width: 300px;
+      padding: 20px;
+      overflow-y: scroll;
+    }
+
+    .one {
+      top: 10vh;
+      left: calc(50vw - 250px);
+      z-index: 100;
+    }
+
+     .two {
+      top: calc(10vh + 50px);
+      left: calc(50vw - 200px);
+      z-index: 101;
+    }
+
+     .three {
+      top: calc(10vh + 100px);
+      left: calc(50vw - 150px);
+      z-index: 102;
+    }
+
+     .four {
+      top: calc(10vh + 150px);
+      left: calc(50vw - 100px);
+      z-index: 103;
+    }
+
+  /* instructions */
+    h1{
+      font-family: sans-serif;
+    }
+
+  /* autoreply pop-up windows */
+  .autoreply{
+    display: none;
+    position: relative;
+    width: 300px;
+    padding: 2rem;
+    background: white;
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+
+  .invisible {
+    display: none;
+  }
+
+/* add or integrate this into css so we get a pointer on hover: */
+  a {
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  #replyOne{
+    animation-name: appear;
+    animation-fill-mode: forwards;
+    opacity: 0;
+  }
+
+  #replyTwo{
+     animation-name: appear;
+     animation-fill-mode: forwards;
+     opacity: 0;
+   }
+
+  #replyThree{
+      animation-name: appear;
+      animation-fill-mode: forwards;
+      opacity: 0;
+  }
+
+  #replyFour{
+       animation-name: appear;
+       animation-fill-mode: forwards;
+       opacity: 0;
+  }
+
+
+  @keyframes appear{
+    0% {opacity:0;}
+    100% {opacity: 1;}
+  }
+
+  .invert {
+    background-color: black;
+    color: white;
+  }
+
+  .about-container{
+    display: block;
+    margin: 0 auto;
+    padding: .5rem;
+    text-align: left;
+  }
+
+  .about-link{
+    font-size: 12pt;
+
+  }
+
+  .about-open{
+    display: none;
+    text-align: left;
+    padding-top: 1rem;
+    width: 300px;
+    line-height: 1.5;
+
+  }
+
+
+
+</style>
+
+  </head>
+  <body>
+  <div class="about-container">
+    <a href="#" class="about-link" id="aboutLink">About</a>
+    <div class="about-open" id="aboutOpen">
+      <i>utterly lost</i> is an archive of email exchanges between 14 people in Interactive Design at Yale in the Spring of 2021. Members of the class were asked to:
+      <ol>
+        <li>Create an autoreply template in their Yale email detailing an imagined vacation.</li>
+        <li>Apply a filter that would send the autoreply to any incoming email with the subject line 'utterly lost'.</li>
+        <li>Compose and send an email with said subject line to each member of the class that asks after a lost item of personal significance.</li>
+      </ol>
+      To view the series of missed connections, select someone from the menu and send their email. The archive will return four autoreplies at random for every email sent.
+    </div>
+  </div>
+  <div id="canvas-md"><!--open tag for container that allows for draggable divs-->
+
+  <!--     SELECTION MENU  -->
+  <div id="container" class="box">
+      <select id="user_choice" onchange="newEmail()">
+        <option value="login">Sender</option>
+        <option value="bianca">Bianca</option>
+        <option value="andrew">Andrew</option>
+        <option value="chia">Chia</option>
+        <option value="lauren">Lauren</option>
+        <option value="rosa">Rosa</option>
+        <option value="lester">Lester</option>
+        <option value="sidney">Sidney</option>
+        <option value="melissa">Melissa</option>
+        <option value="yifan">Yifan</option>
+        <option value="neo">Neo</option>
+        <option value="junyi">Junyi</option>
+        <option value="anthony">Anthony</option>
+        <option value="sam">Sam</option>
+        <option value="mengyi">Mengyi</option>
+      </select>
+     </div>
+
+  <div id="email_container" class="box invisible">
+    <div id="buttonDiv">
+      <button id="send" onclick="replies();toggleVisibility(this)" >send</button>
+    </div>
+  </div>
+
+
+   <!-- reply divs below: -->
+    <div id="replyOne" class="reply one invisible">
+      <a onclick="resetContent(this);">&times;</a><br><br>
+    </div>
+    <div id="replyTwo" class="reply two invisible">
+      <a onclick="resetContent(this)">&times;</a><br><br>
+    </div>
+    <div id="replyThree" class="reply three invisible">
+      <a onclick="resetContent(this)">&times;</a><br><br>
+    </div>
+    <div id="replyFour" class="reply four invisible">
+      <a onclick="resetContent(this)">&times;</a><br><br>
+    </div>
+  </div><!--end canvas container for moveable divs-->
+
+  <!--     END SELECTION MENU  -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+      <script type="text/javascript">
+
+        const x = document.getElementById("user_choice"); // the dropdown menu
+        const container = document.getElementById("container"); // the div around the dropdown menu
+        const email_container = document.getElementById("email_container"); // the container for utterly lost text
+        const send = document.getElementById("send") // send button
+        const buttonDiv = document.getElementById("buttonDiv");
+        let count = 0;
+
+
+        function toggleVisibility(elem) { // any element is made visible or invisible depending on itscurrent state
+          elem.classList.toggle("invisible"); // add or remove class .invisible
+          console.log("visibility change: " + elem.id);
+        }
+
+        function resetContent(reply) { // <a> onClick passes itself to this function
+          const parent = reply.parentElement; // get the parent of the clicked <a> (AKA one of the reply <divs>)
+          parent.innerHTML = "<a onclick=\"resetContent(this)\">&times;<\/a><br><br>"; // reset the inner HTML of the parent
+          toggleVisibility(parent); // make the whole thing invisible again
+          if(count === 3) {
+            email_container.classList.remove("invert");
+            toggleVisibility(container);
+            toggleVisibility(email_container);
+            count = 0;
+            console.log(count);
+            console.log("count reset");
+            email_container.innerHTML = ""; // empty out the email_container so new email can be selected
+            x.selectedIndex = 0;
+          } else {
+            count ++;
+            console.log(count);
+          }
+        }
+
+        // Begin replies function -----------------------------------------------------------/////////////////
+
+        function replies() { // functions: populate reply content, make replies visible
+
+
+          function replySwitch(x) { // a switch statement to pull replies based return value of getRandomInt() below
+            switch (x) {
+              case 1 : // bianca
+                return "Thank you for your email. I am currently perusing the blue-green waters of Thassos. I may be here awhile \r\n<br>\r\<br><i>Bianca</i>";
+                break;
+              case 2 : // andrew
+                return "My apologies: I am in Barcelona for the rest of my life and am unable to respond to your email. \r\n<br>\r\<br><i>Andrew</i>";
+                break;
+              case 3 : // lauren
+                return "Hello, \r\n<br>\r\nThank you for your email. I am currently out of office on a beautiful trip with some secret friends to play out some pranks and serve up some shenanigans. \r\n<br>\r\nI will return from certain undisclosed locations in 3-6 business hours. Thank you for your patience \u2014 I will be back soon. \r\n<br>\r\n<br><i>Lauren</i>";
+                break;
+              case 4 : // chia
+                return "Please go away. I am not available.\r\n<br>\r\nI am currently on a trip to Japan with my friends. We are going to sing lots of anime karaoke, survive on a diet of 24\/7 convenience store rice balls, and contemplate the meaning of life. Please leave me alone.\r\n<br>\r\<br><i>Chia</i>";
+                break;
+              case 5 : // rosa
+                return "I went for a drive this afternoon around the scenic loop and there\'s no service where I\'m going. I remember doing this to clear my head, works like a charm. I\'ll be back after dark.\r\n<br>\r\nSee you on the other side,\r\n<br>\r\n<br><i>Rosa</i>";
+                break;
+              case 6 : // lester
+                return "I am currently on top of Holly Park Hill in Bernal Heights San Francisco. I am traveling back to the first time I visited this hill. I am not here right now. And I am not now right now.\r\n<br>\r\nThank you\r\n<br>\r\<br><i>Lester</i>";
+                break;
+              case 7 : // sidney
+                return " thank you for your inquiry.\r\n<br>\r\nsid is currently enjoying the day outside on Old Campus and is not by her computer.\r\n<br>\r\nif you really must come talk to her, she\'s sitting on a blue blanket outside Durfee hall.\r\n<br>\r\ndon\'t, though, because she\'s angry about having gotten dirt and grass in her soda somehow.\r\n<br>\r\ngoodbye.\r\n<br>\r\<br><i>Sidney</i>";
+                break;
+              case 8 : // melissa
+                return "I\'m currently away on a trip to Sedona, hiking through the red rock canyons. I will get back to you when I return next week. \r\n<br>\r\n<br>\r\n<i>Melissa</i> ";
+                break;
+              case 9 : // yifan
+                return "I'm eating hot pot to celebrate the Spring Festival in New York.\r\n<br>\r\<br><i>Yifan</i>";
+                break;
+              case 10 : // neo
+                return "BRB. I am in the Piazza San Marco enjoying a spritz as the sun sets\r\n<br>\r\<br><i>Neo</i>";
+                break;
+              case 11 : // junyi
+                return "I am currently on a trip. I am climbing the Great Wall with my friends on my Tomb-sweeping Day vacation. I will check the email later :)\r\n<br>\r\<br><i>Junyi</i>";
+                break;
+              case 12 : // anthony
+                return "Let me get back to you. I'm in a slot canyon in Utah and it's starting to rain...,\r\n<br>\r\<br><i>Anthony</i>";
+                break;
+              case 13 : // sam
+                return "I am currently on one of many boats I will use to slowly float from shore to shore along the Bosphorus Strait. I'm sorry we cannot reach each other at the present time, but I will reach out as soon as I can.\r\n<br>\r\<br><i>Samantha</i>";
+                break;
+              case 14 : // mengyi
+                return "Sorry I'm currently out for a trip to Kyoto. Please contact me when I come back.\r\n<br>\r\<br><i>Mengyi</i>";
+            }
+          }
+
+          function getRandomInt(max) { // returns a random number (0-10) based on argument @ randNum
+            // toggleVisibility(send);
+            return Math.floor((Math.random() * max) + 1 );
+          }
+
+          const replyDivs = document.getElementsByClassName("reply"); // the 4 reply divs
+          let randNum = getRandomInt(9); // pass 10 as max value and get random integer 0-10
+          console.log(randNum);
+
+          for(i = 0; i < replyDivs.length; i++) { // Loop through 4 replies
+            replyDivs[i].innerHTML += replySwitch(randNum); // Inject content of return value from switch statement (accessed by index)
+            toggleVisibility(replyDivs[i]); // Make current reply div visible
+            randNum++; // Increment random number up (max will be 14, the total number of replies in switch statement)
+          }
+
+           // show dropdown (will be hidden behind replies)
+          email_container.classList.add("invert");
+        }
+
+        function newEmail() { // this function is called when user selects dropdown option
+          const xValue = x.value; // get the value of the selected option
+          toggleVisibility(container); // hide dropdown
+          email_container.innerHTML = "<p>" + contentSwitch(xValue) + "</p>" + buttonDiv.innerHTML; // wrap utterly lost text with <p> tags & inject into email_container
+          toggleVisibility(email_container);
+
+
+        }
+
+        function contentSwitch(x) { // a switch statement to pull the right piece of content based on value from dropdown
+          switch (x) {
+            case "bianca":
+              return "Have you seen my bandaid? I last felt it on my walk to school.\r\n<br>\r\n<br>\r\n-b";
+              break;
+            case "andrew":
+              return "Have you seen my backpack from 6th grade? It is blue and has my initials embroidered on the back: ADC. I lost it near the vending machines in the gym and my dad is really annoyed RN.\r\n<br>\r\n<br>\r\nThanks!\r\n<br>\r\nADC";
+              break;
+            case "lauren":
+              return "Dear all, \r\n<br>\r\nI seem to have lost my favorite pair of black pants. I believe I last saw them in the laundry room of Hopper College, located in the basement of 189 Elm Street. \r\n<br>\r\nPlease advise. Those were my favorite pants. \r\n<br>\r\n<br>\r\nThank you,\r\n<br>\r\nLauren\r\n<br>\r\n<br>\r\n(so fun fact this was a true story and I eventually found those pants by unscrewing the bottom drawer in my dresser, they had fallen behind there and it was a whole ordeal to get them back)";
+              break;
+            case "chia":
+              return "Hello my lovely Interactive Design and the Internet classmates,\r\n<br>\r\n<br>\r\nHave you seen my MUJI Rubber Grip Polycarbonate Mechanical Pencil in 0.7mm (yes, I use 0.7mm). I last saw it somewhere in the Saybrook courtyards in March 2020 \u2013 when I was last at Yale. I am heartbroken.\r\n<br>\r\n<br>\r\n<img src=\"https:\/\/cdn.glitch.com\/31e2c14b-c535-4ff0-9876-9c2a0219aade%2Fhelpme.png?v=1620067028779\" alt=\"a frowning emoji holding up a sign that says \'HELP ME!\'\">\r\n<br>\r\n<br>\r\nChia :(";
+              break;
+            case "rosa":
+              return "Have you seen my driver\'s license?\r\n<br>\r\n<br>\r\nI lost my driver\'s license in 2019 at Pad Thai in New Haven. I was sitting at one of the big tables in the middle of the store, eating pad thai. I put my coat over the back of my chair, and my license was in the pocket. Now it\'s gone.\r\n<br>\r\n<br>\r\nI replaced the license, just wondering if you\'ve seen my old one.\r\n<br>\r\n<br>\r\nThanks,\r\n<br>\r\nRosa";
+              break;
+            case "lester":
+              return "Hey guys,\r\n<br>\r\nHas anyone seen my mom? She was just standing next to me and I got distracted playing inside this clothing rack. I lost track of her about five minutes ago. This was at Sears department store in Costa Mesa.\r\n<br>\r\n<br>\r\nPlease let me know!\r\n<br>\r\n<br>\r\nWarm regards,\r\n<br>\r\nLester";
+              break;
+            case "sidney":
+              return "hey if anyone sees a spare sense of shame lying around, could you let me know? i think it might be somewhere in the grass on Old Campus. i haven\u2019t seen it for months so idk if it got snowed on or what. i know this is a long shot, but thanks for reading.\r\n<br>\r\n<br>\r\nsid";
+              break;
+            case "melissa":
+              return "Hi all,\r\n<br>\r\n<br>\r\nHave you seen my purple umbrella? I lost it somewhere last year and haven\'t seen it since. It\'s been rainy lately so I\'ve been missing it!\r\n<br>\r\n<br>\r\nMelissa ";
+              break;
+            case "yifan":
+              return "Have you seen my Halloween sox? It's my favorite sox. I last saw it in my wardrobe.";
+              break;
+            case "neo":
+              return "Hey, have you seen my bed? I was sleeping this morning when I woke up and found myself on the floor. I also feel some random pain in my lower back so I really need my bed back. Let me know if you\'ve seen it, it\'s kinda thic(ccc) but desperate for attention so it needs to come back home so I can care for it.\r\n<br>\r\n<br>\r\n-Neo";
+              break;
+            case "junyi":
+              return "Hi guys. If you have seen my AirPods somewhere in the atrium? It has a pink case and the last time I saw it was on my desk.\r\n<br>\r\n<br>\r\nJunyi";
+              break;
+            case "anthony":
+              return " Hi all,\r\n<br>\r\nI am looking for my iPhone 4s. I lost it in 2013, despite me last seeing it inside of my house. In all the time since then, I still haven\'t found it. \r\n<br>\r\nMy two biggest theories on what happened to it are:\r\n\r\n<ol>\r\n<li>It accidentally got tossed out with the trash.<\/li> \r\n<li>It was stolen by someone.<\/li>\r\n<\/ol>\r\n\r\nThis is one of my life\'s greatest mysteries, so hopefully you can help me crack this case wide open.\r\n<br>\r\n<br>\r\nBest,\r\n<br>\r\nAnthony";
+              break;
+            case "sam":
+              return "Have you seen my grey wool scarf? I\'d last seen it at East Haven Park yesterday afternoon. I don\'t know why I wore it, it\'s not even that cold \u2014 I don\'t even care for scarves.\r\n<br>\r\n<br>\r\nBest,\r\n<br>\r\nSam";
+              break;
+            case "mengyi":
+              return "Have you seen my MacBook? I was just writing emails and I couldn\'t find it anywhere.\r\n<br>\r\n<br>\r\nIf you see it please let me know!\r\n<br>\r\n<br>\r\nMengyi";
+          }
+        }
+
+        var divDelayOne = document.getElementById("replyOne");
+        divDelayOne.style.animationDelay = "1s";
+
+        var divDelayTwo = document.getElementById("replyTwo");
+        divDelayTwo.style.animationDelay = "2s";
+
+        var divDelayThree = document.getElementById("replyThree");
+        divDelayThree.style.animationDelay = "3s";
+
+        var divDelayFour = document.getElementById("replyFour");
+        divDelayFour.style.animationDelay = "4s";
+
+        //draggable command
+        $(function(){
+        $("#canvas-md .reply").draggable();
+        });
+
+        //about display toggle
+        var aboutlink = document.getElementById('aboutLink');
+        var aboutopen = document.getElementById('aboutOpen');
+
+        aboutlink.onclick = function(){
+          if(aboutopen.style.display ==="none") {
+            aboutopen.style.display = "block";
+          }
+          else{
+            aboutopen.style.display = "none";
+          }
+        }
+
+      </script>
+
+    </body>
+    </html>

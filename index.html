@@ -3,24 +3,57 @@
 <head>
 	<style>
 
+		* {
+			font-family: arial;
+			font-size: 70px;
+			color: blue;
+			line-height: 110%;
+
+		}
+
 	body {
-		background-image: url(storm.gif);
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
+		padding: 0px;
 	}
 
-	li {
-		color: purple;
-		font-size: 80px;
-		margin-left: 80px;
-		font-family: arial;
+	.linkList {
+		margin-left: 30px;
+		width: 1100px;
+	}
+
+	.rotate {
+		display: inline-block;
+		animation: rotation 10s infinite linear;
+	}
+
+	.list {
+		/*margin-top: 20px;*/
+		font-size: 34px;
+		margin-bottom: 100px;
+	}
+
+	@keyframes rotation {
+	  from {
+	    transform: rotate(0deg);
+	  }
+	  to {
+	    transform: rotate(359deg);
+	  }
 	}
 
 	a {
-		color: purple;
-		font-size: 120px;
+		
+		color: blue;
+		font-size: 70px;
 		text-decoration: none;
+		display: inline-block;
+		margin-left: 12px;
+	}
+
+	p {
+		margin: 10px;
 	}
 
 	a:hover {
@@ -31,15 +64,34 @@
 	</style>
 </head>
 <body>
-	<ul>
-		<li><a href="https://a-d-c-o.github.io/interactive-2021/AC_top_ten/index.html" target="_blank">Top Ten List</a></li>
-		<li><a href="https://a-d-c-o.github.io/interactive-2021/tour/index.html" target="_blank">Tour</a></li>
-		<li><a href="https://a-d-c-o.github.io/interactive-2021/bp3/index.html" target="_blank">Break Points</a></li>
-		<li><a href="https://a-d-c-o.github.io/interactive-2021/sundial/sundial.html" target="_blank">Albers Sundial</a></li>
-	</ul>
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/b-JpI4egl2o" frameborder="2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	<div class="linkList">
+		<p>Andrew Connors <span class="rotate">&#10041;</span> Prelim 
+		<br>
+		Final Review <span class="rotate">&#10041;</span> Spring 2021</p>
+		<br>
+		<p>Projects</p>
+		<div class="list">
+			<span class="rotate">&#10041;</span><a href="https://a-d-c-o.github.io/interactive-2021/tour/index.html" target="_blank">Text Clock / Image Sundial</a>
+			<br>
+			<span class="rotate">&#10041;</span><a href="https://a-d-c-o.github.io/interactive-2021/tour/index.html" target="_blank">Tour</a>
+			<br>
+			<span class="rotate">&#10041;</span><a href="https://a-d-c-o.github.io/interactive-2021/tour/index.html" target="_blank">"Utterly Lost" Protocol</a>
+		</div>
+		
+		<p>Exercises</p>
+		<div class="list">
+			<span class="rotate">&#10041;</span><a href="https://a-d-c-o.github.io/interactive-2021/bp3/index.html" target="_blank">Swarm</a>
+			<br>
+			<span class="rotate">&#10041;</span><a href="https://a-d-c-o.github.io/interactive-2021/sundial/sundial.html" target="_blank">Albers Sundial</a>
+			<br>
+			<span class="rotate">&#10041;</span><a href="https://a-d-c-o.github.io/interactive-2021/bp3/index.html" target="_blank">June Calendar</a>
+		
+		</div>
+	</div>
+
+
+		
+	
 </body>
 </html>
 
-
-still_life.html

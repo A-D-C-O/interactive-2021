@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+
+
+		body {
+			margin: 0px;
+			padding: 0px;
+		}
+
+		div {
+			width: 100vw;
+			height: 100vh;
+		}
+
+		button {
+			position: absolute;
+			z-index: 100;
+			top: 45vh;
+			left: calc(50vw - 28px);
+		}
+
+		.screen {
+			background-color: red;
+			position: absolute;
+			display: inline-block;
+			top: 0px;
+			left: 0px;
+			z-index: 99;
+			background-color: white;
+			width: 100vw;
+			height: 100vh;
+		}
+
+		@keyframes fade {
+  			from {opacity: 1;}
+ 			 to {opacity: 0;}
+		}
+
+		@keyframes fadeArrows {
+			0% {opacity: 0;}
+			30% {opacity: 0;}
+  			40% {opacity: 1;}
+  			70% {opacity: 1;}
+ 			100% {opacity: 0;}
+		}
+
+		.disapear {
+			animation: 2s ease-in 1 normal forwards fade;
+		}
+
+		.disapearArrows {
+			animation: 8s ease-in 1 normal forwards fadeArrows;
+		}
+
+
+		/*first breakpoint*/
+		@media all and (max-width: 3000px) {
+
+			body {
+			margin: 0px;
+			padding: 0px;
+			/*background-color: green;*/
+			display: flex;
+			flex-wrap: wrap;
+			vertical-align: center;
+		}
+
+			.a {
+				background-color: blue;
+				background-image: url("murmur4.jpg");
+				filter: grayscale(100%);
+				background-position: center;
+				background-repeat: no-repeat; 
+  				background-size: cover;
+			}
+
+			.b {
+				background-color: pink;
+			}
+
+			div {
+			width: 100vw;
+			height: 100vh;
+			}
+
+			.two {
+				display: none;
+			}
+
+			.four {
+				display: none;
+			}
+
+			.eight {
+				display: none;
+			}
+
+			.sixteen {
+				display: none;
+			}
+
+
+		}	
+		/*end first breakpoint*/
+
+		/*second breakpoint*/
+
+			@media all and (max-width: 1000px) {
+
+			div {
+			width: 50vw;
+			height: 100vh;
+			}
+
+			.b {
+				background-image: url("murmur1.jpg");
+				filter: grayscale(100%);
+				background-position: center;
+				background-repeat: no-repeat; 
+  				background-size: cover;
+			}
+
+			.c {
+				background-image: url("murmur2.jpg");
+				filter: grayscale(100%);
+				background-position: center;
+				background-repeat: no-repeat; 
+  				background-size: cover;
+			}
+
+			.d {
+				background-image: url("murmur5.jpg");
+				background-position: center;
+				filter: grayscale(100%);
+				background-repeat: no-repeat; 
+  				background-size: cover;
+			}
+
+			.two {
+				display: inline-block;
+			}
+
+			.four {
+				display: none;
+			}
+
+			.eight {
+				display: none;
+			}
+
+			.sixteen {
+				display: none;
+			}
+
+			
+
+		}
+
+		/*end second breakpoint*/
+
+		/*third breakpoint*/
+
+			@media all and (max-width: 900px) {
+
+			div {
+			width: 25vw;
+			height: 100vh;
+			}
+
+			.b {
+				background-color: green;
+			}
+
+			.four {
+				display: inline-block;
+			}
+			.eight {
+				display: none;
+			}
+
+			.sixteen {
+				display: none;
+			}
+
+		}
+
+		/*end third breakpoint*/
+
+		/* fourth breakpoint*/
+
+			@media all and (max-width: 800px) {
+
+			div {
+			width: 12.5vw;
+			height: 100vh;
+			}
+
+			.eight {
+				display: inline-block;
+			}
+
+			.sixteen {
+				display: none;
+			}
+
+		}
+
+		/*end fourth breakpoint*/
+
+
+		/*final breakpoint*/
+
+			@media all and (max-width: 700px) {
+
+			div {
+			width: 6.25vw;
+			height: 100vh;
+			}
+
+			.sixteen {
+				display: inline-block;
+			}
+
+		}
+
+		/*end final breakpoint*/
+
+		#resizer {
+			position: fixed;
+			bottom: 0px;
+			right: 0px;
+			height: 80px;
+			width: 80px;
+			margin-right: -2px;
+			margin-bottom: 8px;
+		}
+
+		.guidance {
+			/*border: 1px solid green;*/
+			display: inline-block;
+			height: 80px;
+			width: 120px;
+			font-size: 80px;
+			color: white;
+/*			line-height: 32px;*/
+			position: absolute;
+  			bottom: 16px;
+  			right: 8px;
+  			text-align: right;
+  			animation: flash 3s normal infinite;
+		}
+
+		@keyframes flash {
+			0% { color: white; }
+			50% { color: black; }
+			80% { color: white; }
+			100% { color: white; }
+		}
+
+		.remove {
+			display: none;
+		}
+
+
+	</style>
+</head>
+<body>
+		
+		<button id="button" onclick="firstPlay()">swarm</button>
+		<div id="screen" class="screen"></div>
+		<div class="one a" id="first"></div>
+		<div class="two b" id="second"></div>
+		<div class="four c" id="third"></div>
+		<div class="four d" id="fourth"></div>
+		<div class="eight a" id="fifth"></div>
+		<div class="eight b" id="sixth"></div>
+		<div class="eight c" id="seventh"></div>
+		<div class="eight d" id="eighth"></div>
+		<div class="sixteen a" id="ninth"></div>
+		<div class="sixteen b" id="tenth"></div>
+		<div class="sixteen c" id="eleventh"></div>
+		<div class="sixteen d" id="twelfth"></div>
+		<div class="sixteen a" id="thirteenth"></div>
+		<div class="sixteen b" id="fourteenth"></div>
+		<div class="sixteen c" id="fifteenth"></div>
+		<div class="sixteen d" id="sixteenth"></div>
+		<div id="resizer" onclick="removeArrow()">
+			<div class="guidance">&#10529;</div>
+		</div>
+
+</body>
+
+<script>
+
+
+
+let userScreen = screen.height;
+let browserWindow = window.innerWidth;
+let vol = browserWindow / userScreen;
+
+let selector_one = document.querySelector('.one');
+let observerOne = new IntersectionObserver(play);
+observerOne.observe(selector_one);
+
+let selector_two = document.querySelector('.two');
+let observerTwo = new IntersectionObserver(play);
+observerTwo.observe(selector_two);
+
+let selector_four = document.querySelector('.four');
+let observerFour = new IntersectionObserver(play);
+observerFour.observe(selector_four);
+
+let selector_eight = document.querySelector('.eight');
+let observerEight = new IntersectionObserver(play);
+observerEight.observe(selector_eight);
+
+let selector_sixteen = document.querySelector('.sixteen');
+let observerSixteen = new IntersectionObserver(play);
+observerSixteen.observe(selector_sixteen);
+
+function play() {
+
+	let userScreen = screen.height;
+	let browserWindow = window.innerHeight;
+	let vol = browserWindow / userScreen;
+	let oneVisible = window.getComputedStyle(selector_one);
+	let twoVisible = window.getComputedStyle(selector_two);
+	let fourVisible = window.getComputedStyle(selector_four);
+	let eightVisible = window.getComputedStyle(selector_eight);
+	let sixteenVisible = window.getComputedStyle(selector_sixteen);
+
+	let player = new Audio();
+
+
+
+
+	if (oneVisible.display !== "none" && twoVisible.display === "none") {
+
+		player.src = 'wave1.mp3'
+		player.volume = vol - .23;
+
+	} else if (twoVisible.display !== "none" && fourVisible.display === "none") {
+
+		player.src = 'wave2.mp3'
+		player.volume = vol - .23;
+
+	} else if (twoVisible.display !== "none" && fourVisible.display !== "none" 
+		&& eightVisible.display === "none") {
+
+		player.src = 'wave3.mp3'
+		player.volume = vol; - .02;
+
+	} else if (twoVisible.display !== "none" && fourVisible.display !== "none" 
+		&& eightVisible.display !== "none" && sixteenVisible.display === "none") {
+
+		player.src = 'wave4.mp3'
+		player.volume = vol - .23;
+
+	} else if (twoVisible.display !== "none" && fourVisible.display !== "none" 
+		&& eightVisible.display !== "none" && sixteenVisible.display !== "none") {
+
+		player.src = 'wave5.mp3'
+		player.volume = vol;
+
+	}
+
+	player.play();
+}
+
+function firstPlay() { // this function runs when the swarm button is clicked
+	let button = document.getElementById("button"); // get the swarm button by its ID
+	let screen = document.getElementById("screen");
+	let arrows = document.getElementById("resizer");
+	screen.classList.toggle("disapear");
+	resizer.classList.toggle("disapearArrows");
+	play(); //call the function "play" to play a sound based on the breakpoint status
+  	button.parentNode.removeChild(button);	// remove the button from the page
+}
+
+function removeArrow() {
+	let arrows = document.getElementsByClassName("guidance");
+	arrows.classList.add("remove");
+	console.log("click");
+}
+
+</script>
+
+</html>
