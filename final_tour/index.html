@@ -198,7 +198,7 @@ function toBlack(current_id) {
 	console.log(current_id + "toBlack");
 	let element = document.getElementById("shapes");
 	element.classList.add("blackSquare");
-	function triggerSwitch(current_id) { setTimeout(function a() {img_switch(current_id);}, 1500);
+	function triggerSwitch(current_id) { setTimeout(function a() {img_switch(current_id);}, 1900);
 		console.log(current_id + " = current_id triggerSwitch complete");
 	}
 	triggerSwitch(current_id);
@@ -207,7 +207,7 @@ function toBlack(current_id) {
 	setTimeout(() => { 
 		void element.offsetWidth; // this line triggers a DOM reflow
 		element.classList.remove("blackSquare"); 
-	}, 3000);
+	}, 3800);
 
 }
 
