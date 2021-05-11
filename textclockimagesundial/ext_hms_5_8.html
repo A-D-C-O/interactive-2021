@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+
+			html {
+			  	scroll-behavior: smooth;
+			}
+
+			body {
+				background: #ff6347;
+			}
+
+			#body_box{
+				width: 100%
+				height: 100%;
+			}
+
+			/*Navigation bar at top of page: ------------------------------------------------ */
+
+			#top_bar{
+				width: 100vw;
+  				height: 90px;
+  				background-color: #ff6347;
+  				position: fixed;
+  				z-index: 100;
+  				top: 0px;
+  				left: 0px;
+  				border-bottom: 2px solid black;
+  				display: flex;
+  				flex-wrap: nowrap;
+  				justify-content: space-between;
+  				box-sizing: border-box;
+			}
+
+			.top_box {
+				/*border: 1px solid blue;*/
+				box-sizing: border-box;
+				height: 100%;
+				width: 33%;
+				min-width: 330px;
+				display: flex;
+				flex-wrap: nowrap; 
+				position: relative;
+  				/*justify-content: space-between;*/
+			}
+
+			.switch_box {
+				/*border: 1px solid black;*/
+				height: 100%;
+				display: inline-block;
+				white-space: nowrap;
+				/*width: 31%;*/
+				padding: 0px 8px;
+				box-sizing: border-box;
+			}
+
+			.switch_box p {
+				margin: 0px;
+				font-size: 16pt;
+				line-height: 90px;
+			}
+
+			#clock {
+				/*border: 1px solid red;*/
+				font-size: 40px;
+				height: calc(100% - 23px);
+				width: 100%;
+				text-align: center;
+				padding-top: 23px;
+
+			}
+
+			/* begin download button styling --------------------------------------------------------*/
+
+			#download_button {
+				position: absolute;
+				right: 35px;
+				font-size: 70px;
+				margin-top: -9px;
+				
+			}
+
+			a:link { text-decoration: none; color: #000000; }
+
+
+			a:visited { text-decoration: none; color: #000000;}
+
+
+			a:hover { text-decoration: none; color: blue; }
+
+
+			a:active { text-decoration: none; color: #000000;}
+
+			/* end download button styling --------------------------------------------------------*/
+			/* begin styling --------------------------------------------------------*/
+
+			/* Popup container */
+			.popup {
+			  position: fixed;
+			  display: inline-block;
+			  top: 105px;
+			  right: 30px;
+			  /*bottom: calc(-100% - 16px);
+			  left: 30px;*/
+			  /*border: 2px solid blue;*/
+			}
+
+			/* The actual popup (appears on top) */
+			.popup .popuptext {
+			  visibility: hidden;
+			  display: inline-block;
+			  height: 100% /*calc(100%; - 16pt);*/
+			  width: calc(100% - 24px);
+			  background-color: #ff6347;
+			  border: 2px solid black;
+			  text-align: center;
+			  padding: 8px 4px;
+			  /*position: absolute;*/
+			  z-index: 1;
+			  /*left: 0px;*/
+			  font-size: 16pt;
+			  /*margin-top: 20px;*/
+			  cursor: pointer;
+			}
+
+			.popup .show {
+			  visibility: visible;
+			  -webkit-animation: fadeIn 1s;
+			  animation: fadeIn 1s
+			}
+
+			/* Add animation (fade in the popup) */
+			@-webkit-keyframes fadeIn {
+			  from {opacity: 0;}
+			  to {opacity: 1;}
+			}
+
+			@keyframes fadeIn {
+			  from {opacity: 0;}
+			  to {opacity:1 ;}
+			}
+
+
+
+			/*toggle switch ----------------------------------------------------------- */
+
+			.switch {
+			  position: relative;
+			  top: calc(50% - 12px);
+			  left: calc(50% - 27px);
+			  display: inline-block;
+			  width: 54px;
+			  height: 30px;
+			}
+
+			.switch input {
+			  opacity: 0;
+			  width: 0;
+			  height: 0;
+			}
+
+			.slider {
+			  position: absolute;
+			  cursor: pointer;
+			  top: 0;
+			  left: 0;
+			  right: 0;
+			  bottom: 0;
+			  background-color: black;
+			  -webkit-transition: .4s;
+			  transition: .4s;
+			}
+
+			.slider:before {
+			  position: absolute;
+			  content: "";
+			  height: 22px;
+			  width: 22px;
+			  left: 4px;
+			  bottom: 4px;
+			  background-color: #ff6347;
+			  -webkit-transition: .4s;
+			  transition: .4s;
+			}
+
+			input:checked + .slider {
+			  background-color: black;
+			}
+
+			input:focus + .slider {
+			  box-shadow: 0 0 1px #2196F3;
+			}
+
+			input:checked + .slider:before {
+			  -webkit-transform: translateX(26px);
+			  -ms-transform: translateX(26px);
+			  transform: translateX(26px);
+			}
+
+			.slider.round {
+			  border-radius: 34px;
+			}
+
+			.slider.round:before {
+			  border-radius: 50%;
+			}
+
+			/*The main body section ---------------------------------------------- */
+
+			#canvas_box {
+				width: 100vw;
+  				height: 100vh;
+				display: flex;
+				flex-direction: row;
+				flex-wrap: nowrap;
+  				align-items: center;
+  				justify-content: center;
+  				padding-top: 50px;
+			}
+
+			canvas {
+				height: 80vh;
+				width: 80vh;
+				border-radius: 50%;
+				mix-blend-mode: difference;
+				position: absolute;
+				display: inline-block;
+    			/*top: 0;
+    			left: 0;*/
+			}
+
+			.photo {
+				/*border: 1px solid blue;*/
+				background-color: blue;
+			}
+
+			/*clock hands --------------------------------------------------------------- */
+
+			.clip_circle {
+				clip-path: circle(500px at center);
+			}
+
+			.close {
+				-webkit-animation: circle_close .7s forwards;
+			  	animation: circle_close .7s forwards;
+			}
+
+			@-webkit-keyframes circle_close {
+			  	from {clip-path: circle(300px at center);}
+			  	to {clip-path: circle(0px at center);}
+			}
+
+			@keyframes circle_close {
+			  	from {clip-path: circle(300px at center);}
+			  	to {clip-path: circle(0px at center);}
+			}
+
+
+
+			.open {
+				-webkit-animation: circle_open .7s forwards;
+			  	animation: circle_open .7s forwards;
+			}
+
+
+			@-webkit-keyframes circle_open {
+				from {clip-path: circle(0px at center);}
+			  	to {clip-path: circle(600px at center);}
+			  	
+			}
+
+			@keyframes circle_open {
+				from {clip-path: circle(0px at center);}
+			  	to {clip-path: circle(600px at center);}
+			  	
+			}
+
+			#s {
+  				background-image: linear-gradient(red, yellow);
+			}
+
+			#h {
+				background-image: linear-gradient(teal, yellow);
+			}
+
+			/*description test & rotated letters ----------------------------------------- */
+
+			#body_text {
+				width: 350px;
+				position: relative;
+				margin: auto;
+				font-size: 16pt;
+				/*display: inline-block;*/
+			}
+
+			#body_text p .s {
+				display: inline-block;
+				font-size: 16pt;
+			}
+
+			#body_text p .m {
+				display: inline-block;
+				font-size: 16pt;
+			}
+
+			#body_text p .h {
+				display: inline-block;
+				font-size: 16pt;
+			}
+
+			.word {
+				display: inline-block;
+				transform-origin: 50% 55%;
+				background-color: transparent;
+				padding: 0px;
+				margin: 0px;
+			}
+
+			#closeDownload {
+				display: inline-block;
+				width: 100%;
+				margin-bottom: 10px;
+			}
+
+			#switch_left {
+				margin-left: 30px;
+			}
+
+			#images_container {
+				position: absolute;
+				height: 90vh;
+				width: 100vw;
+				display: none;
+				/*background-color: pink;*/
+				/*z-index: 100;*/
+			}
+
+			.sundial_image {
+				background-color: blue;
+				position: absolute;
+				background-size: 350px;
+				clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+				
+			}
+
+			/*begin shadow in and out ------------------------*/
+
+			.fadeInShadow {
+				-webkit-animation: shadow_in 3.5s forwards;
+			  	animation: shadow_in 3.5s forwards;
+
+			}
+
+			@-webkit-keyframes shadow_in {
+			  	from {opacity: 0;}
+			  	to {opacity: 1;}
+			}
+
+			@keyframes shadow_in {
+			  	from {opacity: 0;}
+			  	to {opacity: 1;}
+			}
+
+
+			.fadeOutShadow {
+				display: none
+			}
+
+			/*end shadow in and out ------------------------*/
+
+
+			@keyframes shadowAnimate {
+			  	0% {transform: skew(-90deg); opacity: 0;}
+			  	5% {transform: skew(-90deg); opacity: 0;}
+			  	25% {opacity: 1;}
+			  	50% {transform: skew(0deg); opacity: 1;}
+			  	75% {opacity: 1;}
+			  	95% {transform: skew(90deg);  opacity: 0;}
+				100% {transform: skew(90deg);  opacity: 0;}
+			}
+
+
+			.IMGDial {
+				/*display: inline-block;*/ 
+				position: absolute; 
+				background: linear-gradient(to bottom, midnightblue 0%, transparent 100%);
+				mix-blend-mode: darken;
+				/*z-index: 100;*/
+				animation: shadowAnimate linear infinite;
+				transform-origin: 0% 0%
+			}
+
+			#image_one {
+				top: 20vh;
+				left: calc(50vw - 450px);
+				height: 200px;
+				width: 300px;
+				background-image: url("sun7.jpg");
+
+			}
+
+			#shadow_one {
+				height: 200px;
+				width: 300px;
+				top: calc(20vh + 200px);
+				left: calc(50vw - 450px);
+			}
+
+			#image_two {
+				top: calc(20vh + 50px);
+				left: calc(50vw - 100px);
+				height: 300px;
+				width: 200px;
+				background-size: 260px;
+				background-image: url("sun2.jpg");
+			}
+
+			#shadow_two {
+				top: calc(20vh + 350px);
+				left: calc(50vw - 100px);
+				height: 300px;
+				width: 200px;
+
+			}
+
+			#image_three {
+				top: calc(20vh + 250px);
+				left: calc(50vw - 390px);
+				height: 180px;
+				width: 180px;
+				background-size: 290px;
+				background-image: url("sun3.jpg");
+
+			}
+
+			#shadow_three {
+
+				top: calc(20vh + 430px);
+				left: calc(50vw - 390px);
+				height: 180px;
+				width: 180px;
+			}
+
+			#image_four {
+				top: calc(20vh + 250px);
+				left: calc(50vw + 150px);
+				height: 200px;
+				width: 300px;
+				background-image: url("sun8.jpeg");
+				
+			}
+
+			#shadow_four {
+
+				top: calc(20vh + 450px);
+				left: calc(50vw + 150px);
+				height: 200px;
+				width: 300px;
+			}
+
+			#image_five{
+				top: 20vh;
+				left: calc(50vw + 150px);
+				height: 200px;
+				width: 200px;
+				background-image: url("sun1.jpg");
+				
+			}
+
+			#shadow_five {
+				top: calc(20vh + 200px);
+				left: calc(50vw + 150px);
+				height: 200px;
+				width: 200px;
+				z-index: -1;
+			}
+
+			#image_six{
+				top: calc(20vh + 400px);
+				left: calc(50vw - 160px);
+				height: 180px;
+				width: 180px;
+				background-image: url("sun1.jpg");
+				
+			}
+
+			#shadow_six{
+				top: calc(20vh + 580px);
+				left: calc(50vw - 160px);
+				height: 180px;
+				width: 180px;
+
+				
+			}
+
+
+			.closeRect {
+				-webkit-animation: rect_close .7s forwards;
+			  	animation: rect_close .7s forwards;
+			}
+
+			@-webkit-keyframes rect_close {
+			  	from {clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);}
+			  	to {clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);}
+			}
+
+			@keyframes rect_close {
+			  	from {clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);}
+			  	to {clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);}
+			}
+
+			.openRect {
+				-webkit-animation: rect_open .5s forwards;
+			  	animation: rect_open .5s forwards;
+			}
+
+
+			@-webkit-keyframes rect_open {
+				from {clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);}
+			  	to {clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);}
+			}
+
+			@keyframes rect_open {
+				from {clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);}
+			  	to {clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);}
+			  	
+			}
+
+			@keyframes dayNight {
+			  	0% {background-color: white;}
+				100% {background-color: midnightblue;}
+			}
+
+
+			/** {
+				animation: dayNight 7s linear infinite;
+			}*/
+
+
+
+		</style>
+	</head>
+
+	<body>
+		<div id="top_bar">
+			<div class="top_box">
+				<div id="switch_left" class="switch_box">
+					<p>text clock</p>
+				</div>
+				<div class="switch_box">
+					<label class="switch">
+		  				<input type="checkbox">
+		  				<span id="switch" class="slider round" onclick="switcher()"></span>
+					</label>
+				</div>
+				<div class="switch_box">
+					<p>image sundial</p>
+				</div>
+			</div>
+			<div class="top_box">
+				<div id="clock"></div>
+			</div>
+			<div class="top_box">
+				<a id="download_button" href="#body_text" onclick="showDownload()">&#9759;</a>
+				<div class="popup">
+  					<span class="popuptext" id="myPopup">
+  						<span id="closeDownload">&times;</span>
+  						<a href="test.zip" download>download text clock & image sundial</a>
+  					</span>
+				</div>
+			</div>
+		</div>
+		<div id="body_box">
+			<div id="images_container">
+				<div id="image_one" class="sundial_image"></div>
+				<div class="IMGDial" id = "shadow_one"></div>
+				<div id="image_two" class="sundial_image"></div>
+				<div class="IMGDial" id = "shadow_two"></div>
+				<div id="image_three" class="sundial_image"></div>
+				<div class="IMGDial" id = "shadow_three" ></div>
+				<div id="image_four" class="sundial_image"></div>
+				<div class="IMGDial" id = "shadow_four"></div>
+				<div id="image_five" class="sundial_image"></div>
+				<div class="IMGDial" id = "shadow_five"></div>>
+				<div id="image_six" class="sundial_image"></div>
+				<div class="IMGDial" id = "shadow_six"></div>>
+			</div>
+			</div>
+			<div id="canvas_box" class="clip_circle"></div>
+			<div class="photo"></div>
+			<div id="body_text">
+					<p><strong>text clock</strong></p><p>Turn t<span class="h word">h</span>e text<span class="s word">s</span> you read online into clock<span class="s word">s</span>. T<span class="h word">h</span>i<span class="s word">s</span> brow<span class="s word">s</span>er exten<span class="s word">s</span>ion will co<span class="m word">m</span>b t<span class="h word">h</span>roug<span class="h word">h</span> all of t<span class="h word">h</span>e text on any web<span class="s word">s</span>ite t<span class="h word">h</span>at you load. Along t<span class="h word">h</span>e way, it will pau<span class="s word">s</span>e over t<span class="h word">h</span>e letter<span class="s word">s</span> "<span class="h word">h</span>," "<span class="m word">m</span>" and "<span class="s word">s</span>," repre<span class="s word">s</span>enting <span class="h word">h</span>our<span class="s word">s</span> <span class="m word">m</span>inute<span class="s word">s</span> and <span class="s word">s</span>econd<span class="s word">s</span>. It will wrap eac<span class="h word">h</span> of t<span class="h word">h</span>e<span class="s word">s</span>e letter<span class="s word">s</span> in an invi<span class="s word">s</span>ible piece of code. T<span class="h word">h</span>en, in real-ti<span class="m word">m</span>e, t<span class="h word">h</span>e exten<span class="s word">s</span>ion will rotate eac<span class="h word">h</span> wrapped letter according to t<span class="h word">h</span>e current ti<span class="m word">m</span>e. "<span class="h word">h</span>" will be rotated to t<span class="h word">h</span>e angle of t<span class="h word">h</span>e current <span class="h word">h</span>our, "<span class="m word">m</span>" to t<span class="h word">h</span>e current <span class="m word">m</span>inute, and "<span class="s word">s</span>" to t<span class="h word">h</span>e current <span class="s word">s</span>econd, a<span class="s word">s</span> a clock would rotate it<span class="s word">s</span> <span class="h word">h</span>and<span class="s word">s</span>.</p>
+			</div>
+		</div>
+		<script>
+
+
+
+			function switcher() {
+				const switchExtension = document.getElementById("canvas_box");
+				const imgOne = document.getElementById("image_one");
+				const imgTwo = document.getElementById("image_two");
+				const imgThree = document.getElementById("image_three");
+				const imgFour = document.getElementById("image_four");
+				const imgFive = document.getElementById("image_five");
+				const imgSix = document.getElementById("image_six");
+
+				const shadowOne = document.getElementById("shadow_one");
+				const shadowTwo = document.getElementById("shadow_two");
+				const shadowThree = document.getElementById("shadow_three");
+				const shadowFour = document.getElementById("shadow_four");
+				const shadowFive = document.getElementById("shadow_five");
+				const shadowSix = document.getElementById("shadow_six");
+
+				const imgAll = document.getElementById("images_container");
+				
+				
+
+				if(switchExtension.classList.contains('open')) {
+					switchExtension.classList.remove("open");
+					switchExtension.classList.add("close");
+
+					imgOne.classList.add("openRect");
+					imgTwo.classList.add("openRect");
+					imgThree.classList.add("openRect");
+					imgFour.classList.add("openRect");
+					imgFive.classList.add("openRect");
+					imgSix.classList.add("openRect");
+
+					imgOne.classList.remove("closeRect");
+					imgTwo.classList.remove("closeRect");
+					imgThree.classList.remove("closeRect");
+					imgFour.classList.remove("closeRect");
+					imgFive.classList.remove("closeRect");
+					imgSix.classList.remove("closeRect");
+
+					imgAll.classList.add("fadeInShadow");
+
+					shadowOne.classList.add("fadeInShadow");
+					shadowTwo.classList.add("fadeInShadow");
+					shadowThree.classList.add("fadeInShadow");
+					shadowFour.classList.add("fadeInShadow");
+					shadowFive.classList.add("fadeInShadow");
+					shadowSix.classList.add("fadeInShadow");
+
+					shadowOne.classList.remove("fadeOutShadow");
+					shadowTwo.classList.remove("fadeOutShadow");
+					shadowThree.classList.remove("fadeOutShadow");
+					shadowFour.classList.remove("fadeOutShadow");
+					shadowFive.classList.remove("fadeOutShadow");
+					shadowSix.classList.remove("fadeOutShadow");
+					
+				} else if (switchExtension.classList.contains("close")) {
+					switchExtension.classList.remove("close");
+					switchExtension.classList.add("open");
+
+					imgOne.classList.add("closeRect");
+					imgTwo.classList.add("closeRect");
+					imgThree.classList.add("closeRect");
+					imgFour.classList.add("closeRect");
+					imgFive.classList.add("closeRect");
+					imgSix.classList.add("closeRect");
+
+					imgOne.classList.remove("openRect");
+					imgTwo.classList.remove("openRect");
+					imgThree.classList.remove("openRect");
+					imgFour.classList.remove("openRect");
+					imgFive.classList.remove("openRect");
+					imgSix.classList.remove("openRect");
+
+					imgAll.classList.remove("fadeInShadow");
+
+					shadowOne.classList.remove("fadeInShadow");
+					shadowTwo.classList.remove("fadeInShadow");
+					shadowThree.classList.remove("fadeInShadow");
+					shadowFour.classList.remove("fadeInShadow");
+					shadowFive.classList.remove("fadeInShadow");
+					shadowSix.classList.remove("fadeInShadow");
+
+					shadowOne.classList.add("fadeOutShadow");
+					shadowTwo.classList.add("fadeOutShadow");
+					shadowThree.classList.add("fadeOutShadow");
+					shadowFour.classList.add("fadeOutShadow");
+					shadowFive.classList.add("fadeOutShadow");
+					shadowSix.classList.add("fadeOutShadow");
+						
+					
+				} else {
+					switchExtension.classList.add("close");
+					imgAll.style.display = "inline-block";
+					imgAll.classList.add("fadeInShadow");
+
+					imgOne.classList.add("openRect");
+					imgTwo.classList.add("openRect");
+					imgThree.classList.add("openRect");
+					imgFour.classList.add("openRect");
+					imgFive.classList.add("openRect");
+					imgSix.classList.add("openRect");
+
+					imgOne.classList.remove("closeRect");
+					imgTwo.classList.remove("closeRect");
+					imgThree.classList.remove("closeRect");
+					imgFour.classList.remove("closeRect");
+					imgFive.classList.remove("closeRect");
+					imgSix.classList.remove("closeRect");
+
+					shadowOne.classList.add("fadeInShadow");
+					shadowTwo.classList.add("fadeInShadow");
+					shadowThree.classList.add("fadeInShadow");
+					shadowFour.classList.add("fadeInShadow");
+					shadowFive.classList.add("fadeInShadow");
+					shadowSix.classList.add("fadeInShadow");
+
+					shadowOne.classList.remove("fadeOutShadow");
+					shadowTwo.classList.remove("fadeOutShadow");
+					shadowThree.classList.remove("fadeOutShadow");
+					shadowFour.classList.remove("fadeOutShadow");
+					shadowFive.classList.remove("fadeOutShadow");
+					shadowSix.classList.remove("fadeOutShadow");
+				}
+			}
+
+				
+			
+
+			// When the user clicks on div, open the popup
+			function showDownload() {
+				  var popup = document.getElementById("myPopup");
+				  popup.classList.toggle("show");
+			}
+
+			function resetMiddle() {
+				let allWords = document.getElementsByClassName("word");
+
+				for(let thisWord of allWords) {
+					let width = thisWord.offsetWidth;
+					let height = thisWord.offsetHeight;
+					console.log(width + " x " + height);
+				}
+				
+			}
+
+			resetMiddle();
+
+
+			// This function is not being used right now - instead body text with tag wrappers is injected from switch statement
+			function TextClocks() {
+
+			  let allTexts = document.querySelectorAll("p"); 
+
+			  for (let thisText of allTexts) {
+
+			    const list = {
+			      's' : `<span class="s word">s</span>`,
+			      'm' : `<span class="m word">m</span>`,
+			      'h' : `<span class="h word">h</span>`
+			    }
+
+			    thisText.innerHTML = thisText.innerText.replace(/[smh]/g, i => list[i]);
+			    resetMiddle(thisText);
+
+			  }
+			}
+
+			// TextClocks(); // <-- call commented out here
+			
+
+			function drawHand(hand, color) {
+
+				let newHand = document.createElement('canvas');
+				newHand.classList.add("hand", hand);
+				newHand.id = hand;
+				let newHandCTX = newHand.getContext("2d");
+				let double = 2;
+				newHand.height = 1000 * double;
+				newHand.width = 1000 * double;
+				newHandCTX.font ='2000px Arial';
+				newHandCTX.textAlign = "center"
+				newHandCTX.textBaseline = 'middle';
+				newHandCTX.fillStyle = color;
+				newHandCTX.fillText(hand, 1000, 1000);
+				let sWidth = newHandCTX.measureText(hand).width;
+				document.getElementById("canvas_box").appendChild(newHand);
+			}
+
+			drawHand("h", "black");
+			drawHand("s", "white");
+			drawHand("m", "white");
+
+
+			function setRotation(clockHand, count) {
+
+				function chooseInterval() {
+					let date = new Date(); // create new date object
+					let seconds = date.getSeconds(); // get current seconds from date object
+					let minutes = date.getMinutes(); // get current minutes from date object
+					let hours = date.getHours(); // get current hours from date object
+					
+					let secondsFormatted = (seconds >= 10) ? seconds : "0" + seconds; // use ternary operator for quick conditional
+					let minutesFormatted = (minutes >= 10) ? minutes : "0" + minutes; // any value less than 10 gets "0" prepended
+					let hoursFormatted = (hours >= 10) ? hours : "0" + hours;
+
+					let topClock = document.getElementById("clock"); // get the clock <div> from the document
+					topClock.innerText = hoursFormatted + " : " + minutesFormatted + " : " + secondsFormatted; 
+					// inject time values with " : " between each
+
+				if(clockHand === "s") {
+						return seconds;
+					} else if (clockHand === "m") {
+						return minutes;
+					} else if (hours > 12) {
+						return hours - 12;
+					} else {
+						return hours;
+					}	
+				}
+
+				secondsNow = chooseInterval();
+				let hand = document.getElementsByClassName(clockHand);
+
+				// Original value range to be normalized to a new range:
+				let minimum = 0; 
+				let maximum = count; 
+
+				// New value range:
+				let newMinimum = 0; // zero degrees rotation
+				let newMaximum = 359; // full circle rotation minus one
+
+				// Normalized value:
+				let normalized = (newMaximum - newMinimum) * [ (secondsNow - minimum) / (maximum - minimum) ] + newMinimum;
+			
+				// The formula for normalizing a value x that comes from a range (y, z) between a range (a, b):
+				// x_normalized = (b - a) * [ (x - y) / (z - y) ] + a
+
+					// hand.style.transform = `rotate(${normalized}deg)`;
+					for(i = 0; i < hand.length; i++) {
+					    hand[i].style.transform = `rotate(${normalized}deg)`;
+					  }
+			}
+
+			setRotation("s", 60);
+			setRotation("m", 60);
+			setRotation("h", 12); 
+
+			setInterval(function(){ 
+				setRotation("s", 60);
+				setRotation("m", 60);
+				setRotation("h", 12); 
+
+			}, 1000);
+
+
+			// sundialer below ----------------- //
+
+			function setTime() {
+
+				let date = new Date();
+				let secondsNow = date.getSeconds() + (60 * date.getMinutes()) + (3600 * date.getHours()); // total # seconds in 24hrs
+				let allIMGDials = document.getElementsByClassName("IMGDial"); // get al of the <divs> added in newSundial
+
+				for (let IMGDial of allIMGDials) { // for each of them do the following:
+					IMGDial.style.animationDuration = "86400s" // set the full animation duration to 84600s (total number in 24hrs)
+					IMGDial.style.animationDelay = -86400 + secondsNow + "s"; // negatively delay the animation to the current time
+				}
+			}
+
+			setTime();
+
+			function newSundial() {
+
+				let images = document.getElementsByClassName("sundial_image"); // get all of the <img> tags on the page
+
+				for (let IMG of images) { //loop through each item of the "images" array and do the following:
+					let height = IMG.height; //get the current <img> height
+				console.log(images);
+					let width = IMG.width;  //get the current <img> width
+					let parent = IMG.parentElement;  //get the <img>'s parent element
+					let div = document.createElement("DIV");  //create a new <div> in the document
+					div.classList.add("IMGDial");
+					div.style.cssText = `height: ${height}px; width: ${width}px;`; //style the div with the current <img>'s height & width
+					IMG.after(div); // place the new <div> on the page after the current <img> tag
+				}
+				setTime();
+
+			}
+
+			// newSundial(); 
+
+			
+		</script>
+		
+	</body>
+</html>
+
+
+

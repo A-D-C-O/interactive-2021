@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+
+			body {
+				margin: 0px;
+  				background-size: auto;
+			}
+
+			.calendar-container {
+				display: flex;
+				align-items: center;
+  				justify-content: center;
+			}
+
+			.calendar {
+				height: 80%;
+				width: 80%;
+				background-image: url("ocean.jpg");
+				background-size:100% 100%;
+				z-index: 1;
+				min-width: 840px;
+				/*min-height: 700px;*/
+  				/*background-repeat: no-repeat;
+  				background-size: auto; */
+			}
+
+			.border-container {
+				display: flex;
+				justify-content: space-between;
+			}
+
+			.b-c-top {
+				margin-bottom: -15px;
+			}
+
+			.b-c-bottom {
+				margin-top: -15px;
+			}
+
+			.top-border {
+				height: 70px;
+				width: 30px;
+				/*border: 1px solid black;*/
+				flex-shrink: 0;
+				background-color: black;
+			}
+
+			.side-border-container{
+				width: 70px;
+				display: flex;
+				justify-content: space-between;
+				flex-direction: column;
+				margin-top: -15px;
+				margin-bottom: -15px;
+			} 
+
+			.s-b-c-left {
+				margin-right: -15px;
+			}
+
+			.s-b-c-right {
+				margin-left: -15px;
+			}
+
+			.side-border {
+				height: 30px;
+				width: 70px;
+				background-color: black;
+			}
+
+			.body {
+				display: flex;
+			}
+
+			.corner-container {
+				height: 70px;
+				width: 70px;
+				display: flex;
+			}
+
+			.top-corner-black {
+				height: 70px;
+				width: 30px;
+				background-color: black;
+				/*display: inline-block;*/
+				flex-shrink: 0;
+			}
+
+			.t-c-left {
+				margin-left: 40px;
+			}
+
+			.t-c-right {
+				margin-right: 40px;
+			}
+
+			.grid {
+				display: grid;
+				grid-template-columns: auto auto auto auto auto auto auto;
+				height: calc(80vh - 110px);
+				width: 100%;
+				min-height: 500px;
+
+			}
+
+			.day {
+				/*height: 100px;
+				width: 100px;*/
+				justify-content: space-between;
+				z-index: -1;
+				/*border: 1px solid black;*/
+			}
+
+			.black-square {
+				height: 30px;
+				width: 30px;
+				background-color: white;
+				/*border: 1px solid black;*/
+				margin: -15px;
+				border-radius: 100%;
+			}
+
+
+			.inner-day {
+				display: flex;
+				height: 100%;
+				width: 100%;
+				align-items: center;
+  				justify-content: center; 
+			}
+
+			 .inner-day p {
+				margin: 20px;
+				font-size: 50px;
+				/*color: white;*/
+				/*font-weight: bold;*/
+
+			}
+
+			#june {
+				height: 80px;
+				padding-top: 50px;
+				text-align: center;
+			}
+
+			#june p {
+				margin: 0px;
+				font-size: 50px;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div id="june">
+			<p>JUNE</p>
+		</div>
+		<div class="calendar-container">
+		<div class="calendar">
+		<!-- top border div -->
+			<div class="border-container b-c-top">
+				<div class="top-corner-black t-c-left"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-corner-black t-c-right"></div>
+			</div>
+			<!-- first row of boxes -->
+
+			<div class="body">
+
+				<div class="side-border-container s-b-c-left">
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+				</div>
+
+			<div class="grid">
+
+				<!-- Week 1 -->
+				<div class="day grayed"></div>
+				<div class="day grayed"></div>
+				<div class="day"><div class="inner-day"><p>1</p></div></div>
+				<div class="day"><div class="inner-day"><p>2</p></div></div>
+				<div class="day"><div class="inner-day"><p>3</p></div></div>
+				<div class="day"><div class="inner-day"><p>4</p></div></div>
+				<div class="day"><div class="inner-day"><p>5</p></div></div>
+				<!-- Week 2 -->
+				<div class="day"><div class="inner-day"><p>6</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>7</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>8</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>9</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>10</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>11</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>12</p></div></div>
+				<!-- Week 3 -->
+				<div class="day"><div class="inner-day"><p>13</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>14</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>15</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>16</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>17</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>18</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>19</p></div></div>
+				<!-- Week 4 -->
+				<div class="day"><div class="inner-day"><p>20</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>21</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>22</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>23</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>24</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>25</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>26</p></div></div>
+				<!-- Week 5 -->
+				<div class="day"><div class="inner-day"><p>27</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>28</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>29</p></div></div>
+				<div class="day"><div class="black-square"></div><div class="inner-day"><p>30</p></div></div>
+				<div class="day grayed"><div class="black-square"></div></div>
+				<div class="day grayed"><div class="black-square"></div></div>
+				<div class="day grayed"><div class="black-square"></div></div>
+			</div>
+
+				<div class="side-border-container s-b-c-right">
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+					<div class="side-border"></div>
+				</div>
+
+			</div>
+
+			<div class="border-container b-c-bottom">
+				<div class="top-corner-black t-c-left"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-border"></div>
+				<div class="top-corner-black t-c-right"></div>
+			</div>
+		</div>
+	</div>
+	</body>
+</html>
