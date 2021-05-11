@@ -1,0 +1,32 @@
+
+
+@keyframes dayNight {
+  	0% {background-color: white;}
+	100% {background-color: midnightblue;}
+}
+
+
+/** {
+	animation: dayNight 7s linear infinite;
+}*/
+
+@keyframes shadowAnimate {
+  	0% {transform: skew(-90deg); opacity: 0;}
+  	5% {transform: skew(-90deg); opacity: 0;}
+  	25% {opacity: 1;}
+  	50% {transform: skew(0deg); opacity: 1;}
+  	75% {opacity: 1;}
+  	95% {transform: skew(90deg);  opacity: 0;}
+	100% {transform: skew(90deg);  opacity: 0;}
+}
+
+.IMGDial {
+	/*display: inline-block;*/ 
+	position: absolute; 
+	background: linear-gradient(to bottom, midnightblue 0%, transparent 100%);
+	mix-blend-mode: darken;
+	z-index: 100;
+	animation: shadowAnimate linear infinite;
+	transform-origin: 0% 0%
+}
+
