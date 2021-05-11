@@ -1,0 +1,12 @@
+{
+
+	"manifest_version" : 2,
+	"name" : "what time is it",
+	"version" : "1.0",
+	"description" : "hms clockify",
+	"content_scripts" : [{
+		"matches" : ["http://*/*", "https://*/*"],
+		"css" : ["hms_all_letters.css"],
+		"js" : ["hms_all_letters.js"]
+	}]
+}

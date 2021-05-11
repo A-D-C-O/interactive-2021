@@ -1,0 +1,12 @@
+{
+
+	"manifest_version" : 2,
+	"name" : "sundialer",
+	"version" : "1.0",
+	"description" : "images to sundials",
+	"content_scripts" : [{
+		"matches" : ["http://*/*", "https://*/*"],
+		"js" : ["sundialer.js"],
+		"css" : ["sundialer.css"]
+	}]
+}

@@ -1,0 +1,7 @@
+.seconds, .minutes, .hours {
+	display: inline-block;
+	transform-origin: 50% 55%;
+	background-color: transparent;
+	padding: 0px;
+	margin: 0px;
+}
