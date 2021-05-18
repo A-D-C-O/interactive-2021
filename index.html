@@ -73,7 +73,7 @@
 </head>
 <body>
 	<div class="linkList">
-		<p>Andrew Connors <span class="rotate">&#10041;</span> Rosa's Grading Session <span class="rotate">&#10041;</span> May 19, 2021</p>
+		<p>Andrew Connors ✹ Rosa's Grading Session ✹ May 19, 2021</p>
 		<br>
 		<p>Projects</p>
 		<div class="list">
@@ -98,12 +98,7 @@
 	</div>
 
 	<script type="text/javascript">
-				function resetMiddle(elem) {
 
-		let width = elem.offsetWidth;
-		let height = elem.offsetHeight;
-		console.log(width + " x " + height);
-		}
 
 		function TextClocks() {
 
@@ -114,12 +109,11 @@
 		    const list = {
 		      's' : `<span class="seconds">s</span>`,
 		      'm' : `<span class="minutes">m</span>`,
-		      'h' : `<span class="hours">h</span>`
+		      'h' : `<span class="hours">h</span>`,
+		      '✹' : `<span class="rotate">&#10041;</span>`
 		    }
 
-		    resetMiddle(allText);
-
-		    allText.innerHTML = allText.innerText.replace(/[smh]/g, i => list[i]);
+		    allText.innerHTML = allText.innerText.replace(/[smh✹]/g, i => list[i]);
 
 		  }
 		}
